@@ -5,6 +5,7 @@ var leadingNewlineRegex = /^\n[\s]+/
 var trailingSpaceRegex = /[\s]+$/
 var leadingSpaceRegex = /^[\s]+/
 var multiSpaceRegex = /[\n\s]+/g
+var uppercaseRegex = /[A-Z]/
 
 var SVGNS = 'http://www.w3.org/2000/svg'
 var XLINKNS = 'http://www.w3.org/1999/xlink'
@@ -59,7 +60,9 @@ function belCreateElement (tag, props, children) {
   }
 
   // Create the element
-  if (ns) {
+  if (uppercaseRegex.test(tag[0])) {
+    el = window[tag](props)
+  } else if (ns) {
     el = document.createElementNS(ns, tag)
   } else if (tag === COMMENT_TAG) {
     return document.createComment(props.comment)
